@@ -1,5 +1,6 @@
 package codes.jellyrekt.gconomy.util;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import org.bukkit.entity.Player;
@@ -7,7 +8,9 @@ import org.bukkit.entity.Player;
 import codes.jellyrekt.gconomy.gConomy;
 import codes.jellyrekt.gconomy.util.yaml.SalesLog;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Sale {
 	/**
@@ -23,58 +26,90 @@ public class Sale {
 	 */
 	private Material material;
 	/**
-	 * Price of the material as set by the seller.
+	 * Price per unit.
 	 */
 	private double price;
+	/**
+	 * Amount of the material being sold.
+	 */
+	private int amount;
 
 	/**
 	 * Create a new Sale.
 	 * 
-	 * @param seller
-	 * @param material
-	 * @param price
+	 * @param seller   Player selling material
+	 * @param material Material being sold
+	 * @param price    Total price
 	 */
-	private Sale(Player seller, Material material, double price) {
-		this(UUID.randomUUID(), seller, material, price);
-	}
-	/**
-	 * Get a sale by its key. Only called by Sales.get().
-	 * @param key Unique identifier for sale.
-	 */
-	public Sale(UUID key , Player seller, Material material, double price) {
-		this.key = key;
+	private Sale(Player seller, Material material, int amount, double price) {
 		this.seller = seller;
 		this.material = material;
-		this.price = price;
+		this.amount = amount;
+		this.price = amount / price;
+	}
+	/**
+	 * Create a sale from an existing key.
+	 * @param material
+	 * @param key
+	 */
+	private Sale(Material material, YamlConfiguration config, String key) {
+		this.key = UUID.fromString(key);
+		this.material = material;
+		amount = config.getInt(key + ".amount");
+		seller = Bukkit.getPlayer(UUID.fromString(config.getString(key + ".seller")));
+		price = config.getDouble(key + ".price");
 	}
 
-	public UUID getKey() {
+	/**
+	 * @return Unique id for this sale
+	 */
+	public UUID key() {
 		return key;
 	}
 
-	public Player getSeller() {
+	/**
+	 * @return Player selling this item
+	 */
+	public Player seller() {
 		return seller;
 	}
 
-	public Material getMaterial() {
+	/**
+	 * @return Material being sold
+	 */
+	public Material material() {
 		return material;
 	}
-	
-	public double getPrice() {
+
+	/**
+	 * @return Price per item
+	 */
+	public double price() {
 		return price;
 	}
-	/**
-	 * Add sales to the log.
-	 * 
-	 * @param seller
-	 * @param material
-	 * @param amount
-	 * @param price
-	 */
-	public static void add(Player seller, Material material, int amount, double price) {
-		SalesLog log = gConomy.instance().salesLog();
-		for (int i = 0; i < amount; i++)
-			log.add(new Sale(seller, material, price / amount));
-	}
 
+	/**
+	 * @return Amount being sold
+	 */
+	public int amount() {
+		return amount;
+	}
+	/**
+	 * Decrements amount by the given argument.
+	 * @param amount
+	 * @return Actual amount removed.
+	 */
+	public int buyAmount(int amount) {
+		int result = Math.max(0, Math.min(this.amount, amount));
+		this.amount -= result;
+		return amount;
+	}
+	/**
+	 * Get a sale from an existing key.
+	 * @return Existing sale
+	 * @throws IOException 
+	 */
+	public static Sale getSale(Material material, YamlConfiguration config, String key) throws IOException {
+		return new Sale(material, config, key);
+	}
 }

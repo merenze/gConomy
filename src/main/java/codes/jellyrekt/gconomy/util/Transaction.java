@@ -2,38 +2,46 @@ package codes.jellyrekt.gconomy.util;
 
 import java.util.HashSet;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class Transaction {
-	private Player buyer;
-	private HashSet<Sale> sales;
+	private Player seller;
+	private Material material;
+	private int amount;
+	private double total;
 	
-	public Transaction(Player buyer) {
-		this.buyer = buyer;
-		sales = new HashSet<>();
+	public Transaction(Sale sale, int amount) {
+		seller = sale.seller();
+		material = sale.material();
+		this.amount = amount;
+		total = amount * sale.price();
+	}	
+	/**
+	 * Seller associated with this transaction.
+	 * @return
+	 */
+	public Player seller() {
+		return seller;
 	}
-	
-	public void addSale(Sale sale) {
-		sales.add(sale);
+	/**
+	 * Material associated with this transaction.
+	 * @return
+	 */
+	public Material material() {
+		return material;
 	}
-	
-	public Player getBuyer() {
-		return buyer;
+	/**
+	 * Total earnings from this Transaction.
+	 * @return
+	 */
+	public double total() {
+		return total;
 	}
-	
-	public Player getSeller() {
-		for (Sale sale : sales)
-			return sale.getSeller();
-		return null;
-	}
-	public double getAmount() {
-		return sales.size();
-	}
-	
-	public double getTotalCost() {
-		double result = 0.0;
-		for (Sale sale : sales)
-			result += sale.getPrice();
-		return result;
+	/**
+	 * Amount of Material associated with this transaction.
+	 */
+	public int amount() {
+		return amount;
 	}
 }

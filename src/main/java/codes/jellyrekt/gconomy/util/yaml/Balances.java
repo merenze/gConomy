@@ -1,10 +1,12 @@
 package codes.jellyrekt.gconomy.util.yaml;
 
+import java.io.IOException;
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Balances extends CustomConfig {
-	public Balances(JavaPlugin plugin, String filename) {
+	public Balances(JavaPlugin plugin, String filename) throws IOException {
 		super(plugin, filename);
 	}
 	

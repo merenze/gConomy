@@ -1,5 +1,8 @@
 package codes.jellyrekt.gconomy;
 
+import java.io.IOException;
+
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import codes.jellyrekt.gconomy.cmd.*;
@@ -29,7 +32,12 @@ public class gConomy extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		reloadConfig();
-		loadFiles();
+		try {
+			loadFiles();
+		} catch (IOException ex) {
+			getLogger().info(ChatColor.RED + "Failed to create one or more data files. Disabling.");
+			getServer().getPluginManager().disablePlugin(this);
+		}
 		registerCommands();
 	}
 	/**
@@ -64,10 +72,10 @@ public class gConomy extends JavaPlugin {
 		getCommand("withdraw").setExecutor(new WithdrawCommand(this));
 	}
 	
-	private void loadFiles() {
-		messages = new Messages(this, "messages.yml");
-		salesLog = new SalesLog(this, "sales.yml");
-		balances = new Balances(this, "balances.yml");
+	private void loadFiles() throws IOException {
+		saveResource("message-config.yml", false);
+		messages = new Messages(this, "message-config");
+		balances = new Balances(this, "balances");
 	}
 	/**
 	 * Return the handle to the running instance of this plugin.
