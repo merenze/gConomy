@@ -19,80 +19,38 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author JellyRekt
  *
  */
-public class CustomConfig {
+public abstract class CustomConfig {
 	private String path;
 	private File file;
 	private YamlConfiguration config;
 	private JavaPlugin plugin;
 
 	/**
-	 * Creates a new YAML file
+	 * Creates a new YAML file or loads the existing one.
 	 * 
 	 * @param plugin Plugin the file is being created for
-	 * @param name   Name of the file; must include ".yml"
+	 * @param name   Name of the file. Exclude extension.
 	 */
-	public CustomConfig(JavaPlugin plugin, File file) {
+	protected CustomConfig(JavaPlugin plugin, String filename) {
+		this.path = plugin.getDataFolder() + File.separator + "data" + filename + ".yml";
+		// Remaining instantiations
+		path += File.separator + filename + ".yml";
 		this.plugin = plugin;
-		this.file = file;
+		this.file = new File(path);
 		this.config = YamlConfiguration.loadConfiguration(file);
-		this.path = plugin.getDataFolder() + File.separator + file.getName();
 	}
-
 	/**
-	 * Saves the YAML file
+	 * Returns the running instance of this plugin.
+	 * @return instance of gConomy
 	 */
-	public void save() {
-		if (config == null || file == null)
-			return;
-		try {
-			config.save(file);
-		} catch (IOException ex) {
-			plugin.getLogger().info(ex.getStackTrace().toString());
-		}
+	protected JavaPlugin plugin() {
+		return plugin;
 	}
-
-	/**
-	 * Loads the config.
-	 */
-	public void load() {
-		if (file == null)
-			file = new File(path);
-		if (config == null)
-			config = YamlConfiguration.loadConfiguration(file);
-		Reader defConfigStream;
-		try {
-			defConfigStream = new InputStreamReader(plugin.getResource(path), "UTF8");
-			if (defConfigStream != null)
-				config.setDefaults(YamlConfiguration.loadConfiguration(defConfigStream));
-		} catch (UnsupportedEncodingException ex) {
-			plugin.getLogger().info(ex.getStackTrace().toString());
-		}
-	}
-
-	public void reset() {
-		plugin.saveResource(file.getName(), true);
-	}
-
 	/**
 	 * Returns the YamlConfiguration for the CustomConfig
+	 * @return config
 	 */
-	public YamlConfiguration getYaml() {
+	protected YamlConfiguration getYaml() {
 		return config;
-	}
-
-	/**
-	 * Gets the CustomConfig or creates a new one.
-	 * 
-	 * @param plugin   The plugin getting the config.
-	 * @param filename The name of the file; ends in .yml
-	 */
-	public static CustomConfig get(JavaPlugin plugin, String filename) {
-		String path = plugin.getDataFolder() + File.separator + filename;
-		File file = new File(path);
-		if (!file.exists()) {
-			file.mkdirs();
-			plugin.saveResource(filename, true);
-		}
-		return new CustomConfig(plugin, file);
 	}
 }

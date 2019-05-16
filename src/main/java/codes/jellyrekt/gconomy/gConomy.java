@@ -5,17 +5,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import codes.jellyrekt.gconomy.cmd.*;
 import codes.jellyrekt.gconomy.util.yaml.Balances;
 import codes.jellyrekt.gconomy.util.yaml.CustomConfig;
+import codes.jellyrekt.gconomy.util.yaml.Messages;
 import codes.jellyrekt.gconomy.util.yaml.SalesLog;
 
 public class gConomy extends JavaPlugin {
 	/**
 	 * Handle to the running instance of this plugin.
 	 */
-	public static gConomy instance;
+	private static gConomy instance;
 	/**
 	 * Configuration file for messages.
 	 */
-	private CustomConfig msgConfig;
+	private Messages messages;
 	/**
 	 * Flat file for storing sales.
 	 */
@@ -28,19 +29,18 @@ public class gConomy extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		reloadConfig();
-		msgConfig = CustomConfig.get(this, "messages");
-		salesLog = (SalesLog) CustomConfig.get(this, "sales");
+		loadFiles();
 		registerCommands();
 	}
 	/**
 	 * Get the message fileconfiguration.
 	 * @return msgConfig
 	 */
-	public CustomConfig msgConfig() {
-		return msgConfig;
+	public Messages messages() {
+		return messages;
 	}
 	/**
-	 * Get the sales fileconfiguration.
+	 * Get the storage mechanism for the sales log.
 	 * @return salesFile
 	 */
 	public SalesLog salesLog() {
@@ -48,7 +48,7 @@ public class gConomy extends JavaPlugin {
 	}
 	
 	/**
-	 * Get the balances FileConfiguration.
+	 * Get the storage mechanism for balances.
 	 * @return balances
 	 */
 	public Balances balances() {
@@ -56,10 +56,24 @@ public class gConomy extends JavaPlugin {
 	}
 	
 	private void registerCommands() {
-		getCommand("economy").setExecutor(new EconomyCommand());
-		getCommand("buy").setExecutor(new BuyCommand());
-		getCommand("sell").setExecutor(new SellCommand());
-		getCommand("deposit").setExecutor(new SellCommand());
-		getCommand("withdraw").setExecutor(new SellCommand());
+		getCommand("economy").setExecutor(new EconomyCommand(this));
+		getCommand("balance").setExecutor(new BalanceCommand(this));
+		getCommand("buy").setExecutor(new BuyCommand(this));
+		getCommand("sell").setExecutor(new SellCommand(this));
+		getCommand("deposit").setExecutor(new DepositCommand(this));
+		getCommand("withdraw").setExecutor(new WithdrawCommand(this));
+	}
+	
+	private void loadFiles() {
+		messages = new Messages(this, "messages.yml");
+		salesLog = new SalesLog(this, "sales.yml");
+		balances = new Balances(this, "balances.yml");
+	}
+	/**
+	 * Return the handle to the running instance of this plugin.
+	 * @return instance of gConomy
+	 */
+	public static gConomy instance() {
+		return instance;
 	}
 }

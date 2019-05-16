@@ -4,7 +4,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class BuyCommand implements CommandExecutor {
+import codes.jellyrekt.gconomy.gConomy;
+
+public class BuyCommand extends gConomyCommandExecutor {
+
+	public BuyCommand(gConomy plugin) {
+		super(plugin, "buy");
+	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

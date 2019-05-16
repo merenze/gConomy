@@ -1,10 +1,15 @@
 package codes.jellyrekt.gconomy.cmd;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class SellCommand implements CommandExecutor {
+import codes.jellyrekt.gconomy.gConomy;
+
+public class SellCommand extends gConomyCommandExecutor {
+
+	public SellCommand(gConomy plugin) {
+		super(plugin, "sell");
+	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

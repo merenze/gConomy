@@ -1,0 +1,22 @@
+name: gConomy
+main: codes.jellyrekt.gconomy.gConomy
+version: ALPHA
+commands:
+  economy:
+    description: View economy commands.
+    usage: economy
+  balance:
+    description: View your account balance.
+    usage: balance
+  deposit:
+    description: Deposit gold from your inventory to your account.
+    usage: deposit <amount | all>
+  withdraw:
+    description: Withdraw gold from your account to your inventory.
+    usage: withdraw <amount | all>
+  buy:
+    description: Buy items from the market.
+    usage: buy <material> <amount> <total price>
+  sell:
+    description: Sell items to the market.
+    usage: sell <material> <amount> <total price>

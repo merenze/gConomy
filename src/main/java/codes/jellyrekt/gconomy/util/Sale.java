@@ -5,12 +5,9 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 import codes.jellyrekt.gconomy.gConomy;
-import codes.jellyrekt.gconomy.exception.SaleNotDefinedException;
 import codes.jellyrekt.gconomy.util.yaml.SalesLog;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Sale {
 	/**
@@ -38,21 +35,17 @@ public class Sale {
 	 * @param price
 	 */
 	private Sale(Player seller, Material material, double price) {
-		this.key = UUID.randomUUID();
+		this(UUID.randomUUID(), seller, material, price);
+	}
+	/**
+	 * Get a sale by its key. Only called by Sales.get().
+	 * @param key Unique identifier for sale.
+	 */
+	public Sale(UUID key , Player seller, Material material, double price) {
+		this.key = key;
 		this.seller = seller;
 		this.material = material;
 		this.price = price;
-	}
-	/**
-	 * Get a sale by its key.
-	 * @param key Unique identifier for sale.
-	 */
-	public Sale(String key) {
-		YamlConfiguration log = gConomy.instance.salesLog().getYaml();
-		this.key = UUID.fromString(key);
-		this.seller = Bukkit.getPlayer(UUID.fromString(log.getString(key + "." + "seller")));
-		this.material = Material.getMaterial(log.getString(key + "." + "material"));
-		this.price = log.getDouble(key + "." + "material");
 	}
 
 	public UUID getKey() {
@@ -79,7 +72,7 @@ public class Sale {
 	 * @param price
 	 */
 	public static void add(Player seller, Material material, int amount, double price) {
-		SalesLog log = gConomy.instance.salesLog();
+		SalesLog log = gConomy.instance().salesLog();
 		for (int i = 0; i < amount; i++)
 			log.add(new Sale(seller, material, price / amount));
 	}

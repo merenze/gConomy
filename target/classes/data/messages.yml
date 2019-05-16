@@ -1,0 +1,15 @@
+# Displays when attempting to execute a player only command through the console.
+must be player: "&7You must be a player to execute that command."
+#
+# These messages are activated by commands.
+cmd:
+  balance: "&6You have %AMOUNT% gold in your account."
+  deposit: "&6%AMOUNT% gold has been deposited into your account."
+    usage: "&7Usage: /deposit <amount | all>"
+  withdraw: "&6%AMOUNT% gold has been withdrawn from your account."
+  buy:
+    buyer: "&6Bought %AMOUNT% %MATERIAL% for %TOTAL% gold."
+    seller: "&6Someone just bought %AMOUNT% %MATERIAL% from you for %TOTAL% gold!"
+    usage: "&7Usage: /buy <item> <1> <price>"
+  sell: "&6Placed %AMOUNT% %MATERIAL% on market for %TOTAL% gold."
+    usage: "&7Usage: /sell <item> <amount> <price>"
