@@ -2,16 +2,10 @@ package codes.jellyrekt.gconomy.util.yaml;
 
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.Stack;
-import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -95,7 +89,7 @@ public class SalesLog extends CustomConfig {
 	/**
 	 * Add a Sale to its log.
 	 * 
-	 * @param sale
+	 * de@param sale
 	 * @throws IOException
 	 */
 	public static void log(Sale sale) throws IOException {

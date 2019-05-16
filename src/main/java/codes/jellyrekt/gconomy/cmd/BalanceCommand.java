@@ -22,10 +22,9 @@ public class BalanceCommand extends gConomyCommandExecutor {
 		}
 		// Send the player their balance.
 		Player player = (Player) sender;
-		player.sendMessage(plugin().messages().get("cmd.balance").replaceAll("%BALANCE%",
+		player.sendMessage(plugin().messages().get("cmd.balance.success").replaceAll("%AMOUNT%",
 				"" + plugin().balances().getBalance(player)));
-		// TODO
-		player.sendMessage("&7" + plugin().balances().getBalance(player));
+		plugin().getLogger().info(player.getName() + "'s balance is " + plugin().balances().getBalance(player));
 		return true;
 	}
 

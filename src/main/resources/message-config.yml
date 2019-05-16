@@ -1,15 +1,46 @@
-# Displays when attempting to execute a player only command through the console.
-must be player: "&7You must be a player to execute that command."
-#
+################################################################################
+# Displays when attempting to execute a player-only command through the console.
+################################################################################
+
+must-be-player: "&7You must be a player to execute that command."
+
+###########################################
 # These messages are activated by commands.
+###########################################
+
 cmd:
-  balance: "&6You have %AMOUNT% gold in your account."
-  deposit: "&6%AMOUNT% gold has been deposited into your account."
+
+  balance:
+    success: "&6You have %AMOUNT% gold in your account."
+  
+  deposit:
+    success: "&6%AMOUNT% gold has been deposited into your account."
     usage: "&7Usage: /deposit <amount | all>"
-  withdraw: "&6%AMOUNT% gold has been withdrawn from your account."
+    
+  withdraw:
+    success: "&6%AMOUNT% gold has been withdrawn from your account."
+    usage: "&7Usage: /withdraw <amount | all>"
+  
   buy:
-    buyer: "&6Bought %AMOUNT% %MATERIAL% for %TOTAL% gold."
-    seller: "&6Someone just bought %AMOUNT% %MATERIAL% from you for %TOTAL% gold!"
-    usage: "&7Usage: /buy <item> <1> <price>"
-  sell: "&6Placed %AMOUNT% %MATERIAL% on market for %TOTAL% gold."
-    usage: "&7Usage: /sell <item> <amount> <price>"
+    success:
+      buyer: "&6Bought %AMOUNT% %MATERIAL% for %TOTAL% gold."
+      seller: "&6Someone just bought %AMOUNT% %MATERIAL% from you for %TOTAL% gold!"
+    usage: "&7Usage: /buy <item> <amount> <price>"
+    
+  sell:
+    success: "&6Placed %AMOUNT% %MATERIAL% on market for %TOTAL% gold."
+    usage: "&7Usage: /sell <item> <amount | all> <price>"
+    fail: "&cYou do not have %AMOUNT% %MATERIAL% in your inventory."
+    
+  price:
+    success: "&6%AMOUNT% %MATERIAL% costs %TOTAL% gold."
+    fail: "&cThere is not %AMOUNT% %MATERIAL% on the market."
+    usage: "&7Usage: /price <item> [amount]"
+
+  economy:
+    - "&6/economy    &7Display this message."
+    - "&6/balance    &7Check your account balance."
+    - "&6/deposit    &7Deposit gold into your account."
+    - "&6/withdraw   &7Withdraw gold from your account."
+    - "&6/buy        &7Buy an item from the market."
+    - "&6/sell       &7Place an item on the market."
