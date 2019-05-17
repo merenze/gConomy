@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import codes.jellyrekt.gconomy.gConomy;
+import codes.jellyrekt.gconomy.util.yaml.Balances;
+import codes.jellyrekt.gconomy.util.yaml.Messages;
 
 public class DepositCommand extends gConomyCommandExecutor {
 	public DepositCommand(gConomy plugin) {
@@ -17,7 +19,7 @@ public class DepositCommand extends gConomyCommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		// Check for player
 		if (!(sender instanceof Player)) {
-			sender.sendMessage(plugin().messages().get("must-be-player"));
+			sender.sendMessage(Messages.get("must-be-player"));
 			return true;
 		}
 		Player player = (Player) sender;
@@ -32,7 +34,7 @@ public class DepositCommand extends gConomyCommandExecutor {
 		} catch (NumberFormatException ex) {
 			// Check for "all" argument
 			if (!args[0].equalsIgnoreCase("all")) {
-				sender.sendMessage(plugin().messages().get(key() + ".usage"));
+				sender.sendMessage(Messages.get(key() + ".usage"));
 				return true;
 			}
 			amount = goldInInventory(player);
@@ -41,11 +43,11 @@ public class DepositCommand extends gConomyCommandExecutor {
 		amount = Math.max(amount, 0);
 		amount = Math.min(amount, goldInInventory(player));
 		// Update balance
-		plugin().balances().add(player, amount);
+		Balances.add(player, amount);
 		// Update inventory
 		removeGold(player, amount);
 		// Message player
-		sender.sendMessage(plugin().messages().get(key() + "success").replaceAll("%AMOUNT%", "" + amount));
+		sender.sendMessage(Messages.get(key() + "success").replaceAll("%AMOUNT%", "" + amount));
 		return true;
 	}
 

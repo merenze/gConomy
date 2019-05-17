@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import codes.jellyrekt.gconomy.gConomy;
+import codes.jellyrekt.gconomy.util.yaml.Balances;
 import codes.jellyrekt.gconomy.util.yaml.Messages;
 
 public class BalanceCommand extends gConomyCommandExecutor {
@@ -17,14 +18,13 @@ public class BalanceCommand extends gConomyCommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		// Check for player.
 		if (!(sender instanceof Player)) {
-			sender.sendMessage(plugin().messages().get("must-be-player"));
+			sender.sendMessage(Messages.get("must-be-player"));
 			return true;
 		}
 		// Send the player their balance.
 		Player player = (Player) sender;
-		player.sendMessage(plugin().messages().get("cmd.balance.success").replaceAll("%AMOUNT%",
-				"" + plugin().balances().getBalance(player)));
-		plugin().getLogger().info(player.getName() + "'s balance is " + plugin().balances().getBalance(player));
+		player.sendMessage(Messages.get("cmd.balance.success").replaceAll("%AMOUNT%",
+				"" + Balances.getBalance(player)));
 		return true;
 	}
 

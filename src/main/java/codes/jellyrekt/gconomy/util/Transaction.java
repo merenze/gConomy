@@ -1,7 +1,5 @@
 package codes.jellyrekt.gconomy.util;
 
-import java.util.HashSet;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 

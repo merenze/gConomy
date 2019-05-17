@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import codes.jellyrekt.gconomy.gConomy;
+import codes.jellyrekt.gconomy.exception.NotEnoughOnMarketException;
 import codes.jellyrekt.gconomy.util.Sale;
 import codes.jellyrekt.gconomy.util.Transaction;
 
@@ -85,7 +86,6 @@ public class SalesLog extends CustomConfig {
 		getYaml().set(sale.key() + ".price", sale.price());
 		getYaml().set(sale.key() + ".amount", sale.amount());
 	}
-
 	/**
 	 * Add a Sale to its log.
 	 * 
@@ -114,5 +114,24 @@ public class SalesLog extends CustomConfig {
 	 */
 	public Material getMaterial() {
 		return material;
+	}
+	/**
+	 * Gets the market price for given amount of given material. Negative argument defaults to 0.
+	 * @param material
+	 * @param amount
+	 * @throws IOException 
+	 */
+	public static double getPrice(Material material, int amount) throws IOException, NotEnoughOnMarketException {
+		amount = Math.max(0, amount);
+		double result = 0.0;
+		Stack<Sale> sales = getLog(material).getSales();
+		while (amount > 0) {
+			if (sales.isEmpty())
+				throw new NotEnoughOnMarketException();
+			Sale sale = sales.pop();
+			result += Math.min(amount, sale.amount()) * sale.price();
+			amount -= Math.min(amount, sale.amount());
+		}
+		return result;
 	}
 }

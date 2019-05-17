@@ -5,8 +5,12 @@ import java.io.IOException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import codes.jellyrekt.gconomy.gConomy;
+
 public class Balances extends CustomConfig {
-	public Balances(JavaPlugin plugin, String filename) throws IOException {
+	private static Balances instance;
+	
+	private Balances(JavaPlugin plugin, String filename) throws IOException {
 		super(plugin, filename);
 	}
 	
@@ -15,8 +19,8 @@ public class Balances extends CustomConfig {
 	 * @param player
 	 * @return
 	 */
-	public double getBalance(Player player) {
-		return getYaml().getDouble(player.getUniqueId().toString());
+	public static double getBalance(Player player) {
+		return instance.getYaml().getDouble(player.getUniqueId().toString());
 	}
 	/**
 	 * Set's a player's balance.
@@ -31,7 +35,11 @@ public class Balances extends CustomConfig {
 	 * @param player
 	 * @param amount
 	 */
-	public void add(Player player, double amount) {
-		setBalance(player, getBalance(player) + amount);
+	public static void add(Player player, double amount) {
+		instance.setBalance(player, getBalance(player) + amount);
+	}
+	
+	public static void load(gConomy plugin, String filename) throws IOException {
+		instance = new Balances(plugin, filename);
 	}
 }

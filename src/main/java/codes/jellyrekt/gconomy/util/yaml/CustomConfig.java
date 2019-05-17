@@ -3,7 +3,6 @@ package codes.jellyrekt.gconomy.util.yaml;
 import java.io.File;
 import java.io.IOException;
 
-import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 

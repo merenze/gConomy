@@ -9,6 +9,8 @@
 /home/matthew/workspace/java/minecraft/gConomy/src/main/java/codes/jellyrekt/gconomy/cmd/EconomyCommand.java
 /home/matthew/workspace/java/minecraft/gConomy/src/main/java/codes/jellyrekt/gconomy/cmd/DepositCommand.java
 /home/matthew/workspace/java/minecraft/gConomy/src/main/java/codes/jellyrekt/gconomy/util/yaml/CustomConfig.java
+/home/matthew/workspace/java/minecraft/gConomy/src/main/java/codes/jellyrekt/gconomy/exception/NotEnoughOnMarketException.java
 /home/matthew/workspace/java/minecraft/gConomy/src/main/java/codes/jellyrekt/gconomy/util/yaml/Messages.java
 /home/matthew/workspace/java/minecraft/gConomy/src/main/java/codes/jellyrekt/gconomy/util/Sale.java
+/home/matthew/workspace/java/minecraft/gConomy/src/main/java/codes/jellyrekt/gconomy/cmd/PriceCommand.java
 /home/matthew/workspace/java/minecraft/gConomy/src/main/java/codes/jellyrekt/gconomy/cmd/BuyCommand.java

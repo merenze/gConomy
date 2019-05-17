@@ -22,4 +22,4 @@ commands:
     usage: /sell <material> <amount> <total price>
   price:
     description: Get the price of an item on the market.
-    usage: /price <material> [amount]
+    usage: /price <material> <amount>

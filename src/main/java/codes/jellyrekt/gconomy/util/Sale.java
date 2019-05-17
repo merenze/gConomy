@@ -5,9 +5,6 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import codes.jellyrekt.gconomy.gConomy;
-import codes.jellyrekt.gconomy.util.yaml.SalesLog;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;

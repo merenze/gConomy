@@ -4,6 +4,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import codes.jellyrekt.gconomy.gConomy;
+import codes.jellyrekt.gconomy.util.yaml.Messages;
 
 public abstract class gConomyCommandExecutor implements CommandExecutor {
 	private gConomy plugin;
@@ -27,7 +28,7 @@ public abstract class gConomyCommandExecutor implements CommandExecutor {
 	}
 	
 	protected void sendUsage(CommandSender sender) {
-		sender.sendMessage(plugin.messages().get(key + ".usage"));
+		sender.sendMessage(Messages.get(key + ".usage"));
 	}
 	
 	protected String key() {

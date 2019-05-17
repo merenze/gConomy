@@ -38,9 +38,9 @@ cmd:
     usage: "&7Usage: /price <item> [amount]"
 
   economy:
-    - "&6/economy    &7Display this message."
-    - "&6/balance    &7Check your account balance."
-    - "&6/deposit    &7Deposit gold into your account."
-    - "&6/withdraw   &7Withdraw gold from your account."
-    - "&6/buy        &7Buy an item from the market."
-    - "&6/sell       &7Place an item on the market."
+    - "&6/economy - Display this message."
+    - "&6/balance - Check your account balance."
+    - "&6/deposit - Deposit gold into your account."
+    - "&6/withdraw - Withdraw gold from your account."
+    - "&6/buy - Buy an item from the market."
+    - "&6/sell - Place an item on the market."
