@@ -1,9 +1,10 @@
-package codes.jellyrekt.gconomy.util.yaml;
+package codes.jellyrekt.gconomy.util;
 
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Stack;
+import java.util.logging.Level;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,8 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import codes.jellyrekt.gconomy.gConomy;
 import codes.jellyrekt.gconomy.exception.NotEnoughOnMarketException;
-import codes.jellyrekt.gconomy.util.Sale;
-import codes.jellyrekt.gconomy.util.Transaction;
 
 public class SalesLog extends CustomConfig {
 	Material material;
@@ -32,10 +31,15 @@ public class SalesLog extends CustomConfig {
 	 * @return Actual price paid
 	 * @throws IOException
 	 */
-	public static HashSet<Transaction> makeTransaction(Player buyer, Material material, int amount, double totalPrice)
-			throws IOException {
+	public static HashSet<Transaction> makeTransaction(Player buyer, Material material, int amount, double totalPrice) {
 		SalesLog log = getLog(material);
-		Stack<Sale> sales = log.getSales();
+		Stack<Sale> sales;
+		try {
+			sales = log.getSales();
+		} catch (IOException ex) {
+			gConomy.instance().getLogger().log(Level.SEVERE, "Could not access or create sales-logs\\" + material.toString() + ".yml");
+			return null;
+		}
 		HashSet<Transaction> result = new HashSet<>();
 		while (!sales.isEmpty() && totalPrice > sales.peek().price() && amount > 0) {
 			// Update sale information
@@ -93,7 +97,7 @@ public class SalesLog extends CustomConfig {
 	 * de@param sale
 	 * @throws IOException
 	 */
-	public static boolean log(Sale sale) throws IOException {
+	public static boolean log(Sale sale) {
 		SalesLog log = getLog(sale.material());
 		return log.addSale(sale);
 	}
@@ -104,8 +108,13 @@ public class SalesLog extends CustomConfig {
 	 * @param Material
 	 * @throws IOException
 	 */
-	public static SalesLog getLog(Material material) throws IOException {
-		return new SalesLog(gConomy.instance(), "sales-logs", material.toString());
+	public static SalesLog getLog(Material material) {
+		try {
+			return new SalesLog(gConomy.instance(), "sales-logs", material.toString());
+		} catch (IOException ex) {
+			gConomy.instance().getLogger().log(Level.SEVERE, "Could not access or create sales-logs\\" + material.toString() + ".yml");
+			return null;
+		}
 	}
 
 	/**
@@ -122,10 +131,16 @@ public class SalesLog extends CustomConfig {
 	 * @param amount
 	 * @throws IOException 
 	 */
-	public static double getPrice(Material material, int amount) throws IOException, NotEnoughOnMarketException {
+	public static double getPrice(Material material, int amount) throws NotEnoughOnMarketException {
 		amount = Math.max(0, amount);
 		double result = 0.0;
-		Stack<Sale> sales = getLog(material).getSales();
+		Stack<Sale> sales;
+		try {
+			sales = getLog(material).getSales();
+		} catch (IOException ex) {
+			gConomy.instance().getLogger().log(Level.SEVERE, "Could not access or create sales-log" + material.toString() + ".yml");
+			return -1.0;
+		}
 		while (amount > 0) {
 			if (sales.isEmpty())
 				throw new NotEnoughOnMarketException();

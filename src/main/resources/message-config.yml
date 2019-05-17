@@ -1,12 +1,8 @@
-################################################################################
 # Displays when attempting to execute a player-only command through the console.
-################################################################################
 
 must-be-player: "&7You must be a player to execute that command."
 
-###########################################
 # These messages are activated by commands.
-###########################################
 
 cmd:
 
@@ -35,7 +31,6 @@ cmd:
     
   price:
     success: "&6%AMOUNT% %MATERIAL% costs %TOTAL% gold."
-    fail: "&cThere is not %AMOUNT% %MATERIAL% on the market."
     usage: "&7Usage: /price <amount> <item>"
 
   economy:
@@ -45,3 +40,7 @@ cmd:
     - "&6/withdraw - Withdraw gold from your account."
     - "&6/buy - Buy an item from the market."
     - "&6/sell - Place an item on the market."
+    
+  not-enough-on-market: "&cThere is not %AMOUNT% %MATERIAL% on the market.
+  not-enough-money: "&cYou do not have enough gold to do that."
+  internal-error: "&4Failed. Internal error."

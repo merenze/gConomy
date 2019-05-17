@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import codes.jellyrekt.gconomy.gConomy;
-import codes.jellyrekt.gconomy.util.yaml.Messages;
+import codes.jellyrekt.gconomy.util.Messages;
 
 public class EconomyCommand extends gConomyCommandExecutor {
 	public EconomyCommand(gConomy plugin) {

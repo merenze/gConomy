@@ -1,4 +1,4 @@
-package codes.jellyrekt.gconomy.util.yaml;
+package codes.jellyrekt.gconomy.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,5 +73,9 @@ public abstract class CustomConfig {
 	 */
 	public void reloadDefaults(String filepath) {
 		plugin.saveResource(filepath, true);
+	}
+	
+	protected String path() {
+		return path;
 	}
 }

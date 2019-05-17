@@ -3,15 +3,12 @@ package codes.jellyrekt.gconomy.cmd;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import java.io.IOException;
-
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import codes.jellyrekt.gconomy.gConomy;
 import codes.jellyrekt.gconomy.exception.NotEnoughOnMarketException;
-import codes.jellyrekt.gconomy.util.yaml.Messages;
-import codes.jellyrekt.gconomy.util.yaml.SalesLog;
+import codes.jellyrekt.gconomy.util.Messages;
+import codes.jellyrekt.gconomy.util.SalesLog;
 
 public class PriceCommand extends gConomyCommandExecutor {
 
@@ -43,10 +40,7 @@ public class PriceCommand extends gConomyCommandExecutor {
 		try {
 			sender.sendMessage(Messages.get(key() + ".success").replaceAll("%MATERIAL%", material.toString()).replaceAll("%TOTAL%", "" + SalesLog.getPrice(material, amount)).replaceAll("%AMOUNT%", "" + amount));
 		} catch (NotEnoughOnMarketException ex) {
-			sender.sendMessage(Messages.get(key() + ".fail").replaceAll("%AMOUNT%", "" + amount).replaceAll("%MATERIAL%", material.toString()));
-		} catch (IOException ex) {
-			sender.sendMessage(ChatColor.DARK_RED + "Failed.");
-			plugin().getLogger().info(ChatColor.RED + ex.getStackTrace().toString());
+			sender.sendMessage(Messages.get("cmd.not-enough-on-market").replaceAll("%AMOUNT%", "" + amount).replaceAll("%MATERIAL%", material.toString()));
 		}
 		return true;
 	}

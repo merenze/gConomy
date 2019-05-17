@@ -5,7 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import codes.jellyrekt.gconomy.gConomy;
-import codes.jellyrekt.gconomy.util.yaml.Messages;
+import codes.jellyrekt.gconomy.util.Messages;
 
 public abstract class gConomyCommandExecutor implements CommandExecutor {
 	private gConomy plugin;
@@ -59,5 +59,9 @@ public abstract class gConomyCommandExecutor implements CommandExecutor {
 	
 	protected void displayUsage(CommandSender sender) {
 		sender.sendMessage(Messages.get(key + ".usage"));
+	}
+	
+	protected void sendError(CommandSender sender) {
+		sender.sendMessage(Messages.get("cmd.internal-failure"));
 	}
 }

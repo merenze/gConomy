@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import codes.jellyrekt.gconomy.gConomy;
-import codes.jellyrekt.gconomy.util.yaml.Balances;
-import codes.jellyrekt.gconomy.util.yaml.Messages;
+import codes.jellyrekt.gconomy.util.Balances;
+import codes.jellyrekt.gconomy.util.Messages;
 
 public class DepositCommand extends gConomyCommandExecutor {
 	public DepositCommand(gConomy plugin) {

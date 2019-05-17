@@ -1,8 +1,5 @@
 package codes.jellyrekt.gconomy.cmd;
 
-import java.io.IOException;
-
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,9 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import codes.jellyrekt.gconomy.gConomy;
+import codes.jellyrekt.gconomy.util.Messages;
 import codes.jellyrekt.gconomy.util.Sale;
-import codes.jellyrekt.gconomy.util.yaml.Messages;
-import codes.jellyrekt.gconomy.util.yaml.SalesLog;
+import codes.jellyrekt.gconomy.util.SalesLog;
 
 public class SellCommand extends gConomyCommandExecutor {
 
@@ -27,13 +24,13 @@ public class SellCommand extends gConomyCommandExecutor {
 			return true;
 		}
 		if (args.length < 3) {
-			sender.sendMessage(Messages.get(key() + ".usage"));
+			displayUsage(sender);
 			return true;
 		}
 		// Parse material
 		Material material = parseMaterial(args);
 		if (material == null) {
-			sender.sendMessage(Messages.get(key() + ".usage"));
+			displayUsage(sender);
 			return true;
 		}
 		// Parse amount
@@ -41,7 +38,7 @@ public class SellCommand extends gConomyCommandExecutor {
 		try {
 			amount = parseAmount(args);
 		} catch (NumberFormatException ex) {
-			sender.sendMessage(Messages.get(key() + ".usage"));
+			displayUsage(sender);
 			return true;
 		}
 		// Parse price
@@ -49,12 +46,12 @@ public class SellCommand extends gConomyCommandExecutor {
 		try {
 			price = parsePrice(args);
 		} catch (NumberFormatException ex) {
-			sender.sendMessage(Messages.get(key() + ".usage"));
+			displayUsage(sender);
 			return true;
 		}
 		Player player = (Player) sender;
 		if (amount > amountInInventory(player, material)) {
-			sender.sendMessage(Messages.get(key() + ".fail").replaceAll("%AMOUNT%", "" + amount)
+			sender.sendMessage(Messages.get("cmd.not-enough-in-inventory").replaceAll("%AMOUNT%", "" + amount)
 					.replaceAll("%MATERIAL%", material.toString()));
 			return true;
 		}
@@ -63,17 +60,12 @@ public class SellCommand extends gConomyCommandExecutor {
 			return true;
 		}
 		Sale sale = new Sale(player, material, amount, price);
-		try {
 			if (SalesLog.log(sale))
 				sender.sendMessage(Messages.get(key() + ".success").replaceAll("%AMOUNT%", "" + amount)
 						.replaceAll("%TOTAL%", "" + price).replaceAll("%PRICE%", "" + sale.price())
 						.replaceAll("%MATERIAL%", material.toString()));
 			else
-				sender.sendMessage(ChatColor.DARK_RED + "Failed.");
-		} catch (IOException ex) {
-			sender.sendMessage(ChatColor.DARK_RED + "Failed.");
-			plugin().getLogger().info(ChatColor.RED + ex.getStackTrace().toString());
-		}
+				sendError(sender);
 		removeFromInventory(player, material, amount);
 		return true;
 	}

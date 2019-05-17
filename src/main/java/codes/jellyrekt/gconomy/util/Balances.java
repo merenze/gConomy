@@ -1,4 +1,4 @@
-package codes.jellyrekt.gconomy.util.yaml;
+package codes.jellyrekt.gconomy.util;
 
 import java.io.IOException;
 
