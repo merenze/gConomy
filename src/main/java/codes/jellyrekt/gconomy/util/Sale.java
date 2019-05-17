@@ -43,7 +43,7 @@ public class Sale {
 		this.seller = seller;
 		this.material = material;
 		this.amount = amount;
-		this.price = amount / price;
+		this.price = price / amount;
 	}
 
 	/**

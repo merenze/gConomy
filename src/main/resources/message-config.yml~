@@ -15,28 +15,28 @@ cmd:
   
   deposit:
     success: "&6%AMOUNT% gold has been deposited into your account."
-    usage: "&7Usage: /deposit <amount | all>"
+    usage: "&7Usage: /deposit <amount>"
     
   withdraw:
     success: "&6%AMOUNT% gold has been withdrawn from your account."
-    usage: "&7Usage: /withdraw <amount | all>"
+    usage: "&7Usage: /withdraw <amount>"
   
   buy:
     success:
       buyer: "&6Bought %AMOUNT% %MATERIAL% for %TOTAL% gold."
       seller: "&6Someone just bought %AMOUNT% %MATERIAL% from you for %TOTAL% gold!"
-    usage: "&7Usage: /buy <item> <amount> <price>"
+    usage: "&7Usage: /buy <amount> <item> <price>"
     
   sell:
     success: "&6Placed %AMOUNT% %MATERIAL% on market for %PRICE% gold each."
-    usage: "&7Usage: /sell <item> <amount | all> <price>"
+    usage: "&7Usage: /sell <amount | all> <item> <price>"
     fail: "&cYou do not have %AMOUNT% %MATERIAL% in your inventory."
     amount-zero: "&cYou must sell at least one!"
     
   price:
     success: "&6%AMOUNT% %MATERIAL% costs %TOTAL% gold."
     fail: "&cThere is not %AMOUNT% %MATERIAL% on the market."
-    usage: "&7Usage: /price <item> [amount]"
+    usage: "&7Usage: /price <amount> <item>"
 
   economy:
     - "&6/economy - Display this message."

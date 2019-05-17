@@ -19,29 +19,27 @@ public class PriceCommand extends gConomyCommandExecutor {
 		super(plugin, "price");
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length < 1) {
-			sender.sendMessage(Messages.get(key() + ".usage"));
+			displayUsage(sender);
 			return true;
 		}
-		Material material;
-		try {
-			material = Material.getMaterial(Integer.parseInt(args[0]));
-		} catch (NumberFormatException ex) {
-			material = Material.getMaterial(args[0].toUpperCase());
-		}
-		if (material == null) {
-			sender.sendMessage(Messages.get(key() + ".usage"));
-			return true;
-		}
+		// Parse amount
 		int amount;
 		try {
-			amount = (args.length >= 2) ? (int) Double.parseDouble(args[1]) : 1;
+			amount = parseAmount(args);
 		} catch (NumberFormatException ex) {
-			amount = 1;
+			displayUsage(sender);
+			return true;
 		}
+		// Parse material
+		Material material = parseMaterial(args);
+		if (material == null) {
+			displayUsage(sender);
+			return true;
+		}
+		// Retrieve information and message sender
 		try {
 			sender.sendMessage(Messages.get(key() + ".success").replaceAll("%MATERIAL%", material.toString()).replaceAll("%TOTAL%", "" + SalesLog.getPrice(material, amount)).replaceAll("%AMOUNT%", "" + amount));
 		} catch (NotEnoughOnMarketException ex) {

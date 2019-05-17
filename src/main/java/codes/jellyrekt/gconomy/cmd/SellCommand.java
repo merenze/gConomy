@@ -30,26 +30,24 @@ public class SellCommand extends gConomyCommandExecutor {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
 		}
-		Material material;
-		try {
-			material = Material.getMaterial(Integer.parseInt(args[0]));
-		} catch (NumberFormatException ex) {
-			material = Material.getMaterial(args[0].toUpperCase());
-		}
+		// Parse material
+		Material material = parseMaterial(args);
 		if (material == null) {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
 		}
+		// Parse amount
 		int amount;
 		try {
-			amount = (int) Double.parseDouble(args[1]);
+			amount = parseAmount(args);
 		} catch (NumberFormatException ex) {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
 		}
+		// Parse price
 		double price;
 		try {
-			price = Double.parseDouble(args[2]);
+			price = parsePrice(args);
 		} catch (NumberFormatException ex) {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
