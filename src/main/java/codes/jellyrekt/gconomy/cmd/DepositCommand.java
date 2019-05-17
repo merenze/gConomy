@@ -47,7 +47,7 @@ public class DepositCommand extends gConomyCommandExecutor {
 		// Update inventory
 		removeGold(player, amount);
 		// Message player
-		sender.sendMessage(Messages.get(key() + "success").replaceAll("%AMOUNT%", "" + amount));
+		sender.sendMessage(Messages.get(key() + ".success").replaceAll("%AMOUNT%", "" + amount));
 		return true;
 	}
 

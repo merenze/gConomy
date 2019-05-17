@@ -40,7 +40,7 @@ public class gConomy extends JavaPlugin {
 	
 	private void loadFiles() throws IOException {
 		saveResource("message-config.yml", false);
-		Messages.load(this, "messages");
+		Messages.load(this, "message-config");
 		Balances.load(this, "balances");
 	}
 	/**

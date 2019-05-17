@@ -25,7 +25,7 @@ public class PriceCommand extends gConomyCommandExecutor {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
 		}
-		Material material = Material.getMaterial(args[0]);
+		Material material = Material.getMaterial(args[0].toUpperCase());
 		if (material == null) {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
