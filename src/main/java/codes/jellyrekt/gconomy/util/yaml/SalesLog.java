@@ -81,10 +81,11 @@ public class SalesLog extends CustomConfig {
 	 * 
 	 * @param sale
 	 */
-	private void addSale(Sale sale) {
+	private boolean addSale(Sale sale) {
 		getYaml().set(sale.key() + ".seller", sale.seller().getUniqueId().toString());
 		getYaml().set(sale.key() + ".price", sale.price());
 		getYaml().set(sale.key() + ".amount", sale.amount());
+		return save();
 	}
 	/**
 	 * Add a Sale to its log.
@@ -92,9 +93,9 @@ public class SalesLog extends CustomConfig {
 	 * de@param sale
 	 * @throws IOException
 	 */
-	public static void log(Sale sale) throws IOException {
+	public static boolean log(Sale sale) throws IOException {
 		SalesLog log = getLog(sale.material());
-		log.addSale(sale);
+		return log.addSale(sale);
 	}
 
 	/**
@@ -104,7 +105,7 @@ public class SalesLog extends CustomConfig {
 	 * @throws IOException
 	 */
 	public static SalesLog getLog(Material material) throws IOException {
-		return new SalesLog(gConomy.instance(), "sales-logs", material.toString() + ".yml");
+		return new SalesLog(gConomy.instance(), "sales-logs", material.toString());
 	}
 
 	/**

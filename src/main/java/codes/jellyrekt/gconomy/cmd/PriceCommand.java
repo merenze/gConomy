@@ -19,13 +19,19 @@ public class PriceCommand extends gConomyCommandExecutor {
 		super(plugin, "price");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length < 1) {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
 		}
-		Material material = Material.getMaterial(args[0].toUpperCase());
+		Material material;
+		try {
+			material = Material.getMaterial(Integer.parseInt(args[0]));
+		} catch (NumberFormatException ex) {
+			material = Material.getMaterial(args[0].toUpperCase());
+		}
 		if (material == null) {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
@@ -37,10 +43,11 @@ public class PriceCommand extends gConomyCommandExecutor {
 			amount = 1;
 		}
 		try {
-			sender.sendMessage(Messages.get(key() + ".success").replaceAll("%MATERIAL%", material.toString()).replaceAll("%PRICE%", "" + SalesLog.getPrice(material, amount)));
+			sender.sendMessage(Messages.get(key() + ".success").replaceAll("%MATERIAL%", material.toString()).replaceAll("%TOTAL%", "" + SalesLog.getPrice(material, amount)).replaceAll("%AMOUNT%", "" + amount));
 		} catch (NotEnoughOnMarketException ex) {
-			sender.sendMessage(Messages.get(key() + ".fail").replaceAll("%AMOUNT%", "" + amount).replaceAll("%MATERIAL", material.toString()));
+			sender.sendMessage(Messages.get(key() + ".fail").replaceAll("%AMOUNT%", "" + amount).replaceAll("%MATERIAL%", material.toString()));
 		} catch (IOException ex) {
+			sender.sendMessage(ChatColor.DARK_RED + "Failed.");
 			plugin().getLogger().info(ChatColor.RED + ex.getStackTrace().toString());
 		}
 		return true;

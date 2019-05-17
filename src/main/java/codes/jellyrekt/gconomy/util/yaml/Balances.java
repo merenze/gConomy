@@ -29,6 +29,7 @@ public class Balances extends CustomConfig {
 	 */
 	private void setBalance(Player player, double amount) {
 		getYaml().set(player.getUniqueId().toString(), amount);
+		save();
 	}
 	/**
 	 * Adds the given amount to a player's balance. Accepts negative values.

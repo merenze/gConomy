@@ -33,19 +33,22 @@ public class Sale {
 
 	/**
 	 * Create a new Sale.
-	 * 
+	 * sto
 	 * @param seller   Player selling material
 	 * @param material Material being sold
 	 * @param price    Total price
 	 */
-	private Sale(Player seller, Material material, int amount, double price) {
+	public Sale(Player seller, Material material, int amount, double price) {
+		this.key = UUID.randomUUID();
 		this.seller = seller;
 		this.material = material;
 		this.amount = amount;
 		this.price = amount / price;
 	}
+
 	/**
 	 * Create a sale from an existing key.
+	 * 
 	 * @param material
 	 * @param key
 	 */
@@ -91,8 +94,10 @@ public class Sale {
 	public int amount() {
 		return amount;
 	}
+
 	/**
 	 * Decrements amount by the given argument.
+	 * 
 	 * @param amount
 	 * @return Actual amount removed.
 	 */
@@ -101,10 +106,12 @@ public class Sale {
 		this.amount -= result;
 		return amount;
 	}
+
 	/**
 	 * Get a sale from an existing key.
+	 * 
 	 * @return Existing sale
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static Sale getSale(Material material, YamlConfiguration config, String key) throws IOException {
 		return new Sale(material, config, key);

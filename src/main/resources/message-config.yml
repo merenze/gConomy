@@ -28,9 +28,10 @@ cmd:
     usage: "&7Usage: /buy <item> <amount> <price>"
     
   sell:
-    success: "&6Placed %AMOUNT% %MATERIAL% on market for %TOTAL% gold."
+    success: "&6Placed %AMOUNT% %MATERIAL% on market for %PRICE% gold each."
     usage: "&7Usage: /sell <item> <amount | all> <price>"
     fail: "&cYou do not have %AMOUNT% %MATERIAL% in your inventory."
+    amount-zero: "&cYou must sell at least one!"
     
   price:
     success: "&6%AMOUNT% %MATERIAL% costs %TOTAL% gold."

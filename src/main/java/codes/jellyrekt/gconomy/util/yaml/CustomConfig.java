@@ -56,6 +56,18 @@ public abstract class CustomConfig {
 		return config;
 	}
 	/**
+	 * Saves the config file. Do this after editing.
+	 */
+	public boolean save() {
+		try {
+			config.save(file);
+			return true;
+		} catch (IOException ex) {
+			plugin.getLogger().info("Unable to save " + path);
+			return false;
+		}
+	}
+	/**
 	 * Reload defaults from resource
 	 * @param filepath Path to default file  
 	 */
