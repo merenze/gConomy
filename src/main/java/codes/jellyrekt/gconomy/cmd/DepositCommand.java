@@ -22,8 +22,10 @@ public class DepositCommand extends gConomyCommandExecutor {
 		}
 		Player player = (Player) sender;
 		// Check for valid argument
-		if (args.length < 1)
+		if (args.length < 1) {
 			sendUsage(sender);
+			return true;
+		}
 		int amount;
 		try {
 			amount = (int) Double.parseDouble(args[0]);
@@ -43,7 +45,7 @@ public class DepositCommand extends gConomyCommandExecutor {
 		// Update inventory
 		removeGold(player, amount);
 		// Message player
-		sender.sendMessage(plugin().messages().get(key()).replaceAll("%AMOUNT%", "" + amount));
+		sender.sendMessage(plugin().messages().get(key() + "success").replaceAll("%AMOUNT%", "" + amount));
 		return true;
 	}
 
@@ -56,7 +58,7 @@ public class DepositCommand extends gConomyCommandExecutor {
 	private int goldInInventory(Player player) {
 		int result = 0;
 		for (ItemStack item : player.getInventory())
-			if (item.getType() == Material.GOLD_INGOT)
+			if (item != null && item.getType() == Material.GOLD_INGOT)
 				result += item.getAmount();
 		return result;
 	}

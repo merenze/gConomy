@@ -47,7 +47,7 @@ public class WithdrawCommand extends gConomyCommandExecutor {
 		// Update inventory
 		giveGold(player, amount);
 		// Send message
-		sender.sendMessage(plugin().messages().get(key()).replaceAll("%AMOUNT%", "" + amount));
+		sender.sendMessage(plugin().messages().get(key() + ".success").replaceAll("%AMOUNT%", "" + amount));
 		return true;
 	}
 	/**
