@@ -15,7 +15,11 @@ import codes.jellyrekt.gconomy.util.Balances;
 import codes.jellyrekt.gconomy.util.Messages;
 import codes.jellyrekt.gconomy.util.SalesLog;
 import codes.jellyrekt.gconomy.util.Transaction;
-
+/**
+ * Executor for /buy
+ * @author JellyRekt
+ *
+ */
 public class BuyCommand extends gConomyCommandExecutor {
 
 	public BuyCommand(gConomy plugin) {
