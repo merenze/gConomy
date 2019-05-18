@@ -52,9 +52,9 @@ public class SalesLog extends CustomConfig {
 				log.getYaml().set(sale.key().toString(), null);
 			else
 				log(sale);
+			log.save();
 			result.add(new Transaction(sale, amountBought));
 		}
-		// TODO
 		return result;
 	}
 
@@ -79,6 +79,25 @@ public class SalesLog extends CustomConfig {
 		};
 		stack.sort(comparator);
 		return stack;
+	}
+	
+	/**
+	 * Get the amount of given Material available on the market.
+	 * @param Material to search for
+	 * @return Amount on market, or -1 if an I/O error occurs.
+	 */
+	public static int getAmountOnMarket(Material material) {
+		Stack<Sale> s;
+		try {
+			s = getLog(material).getSales();
+		} catch (IOException ex) {
+			gConomy.instance().getLogger().log(Level.SEVERE, "Could not access or create sales-log\\" + material.toString() + ".yml");
+			return -1;
+		}
+		int result = 0;
+		while (!s.isEmpty())
+			result += s.pop().amount();
+		return result;
 	}
 	/**
 	 * Add a sale to the log.

@@ -17,7 +17,7 @@ public class Messages extends CustomConfig {
 	}
 	
 	private String getMessage(String key) {
-		return ChatColor.translateAlternateColorCodes('&', (getYaml().getString(key)));
+		return ChatColor.translateAlternateColorCodes('&', getYaml().getString(key));
 	}
 	
 	public List<String> getMessageList(String key) {

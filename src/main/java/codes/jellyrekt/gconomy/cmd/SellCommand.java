@@ -14,12 +14,13 @@ import codes.jellyrekt.gconomy.util.SalesLog;
 public class SellCommand extends gConomyCommandExecutor {
 
 	public SellCommand(gConomy plugin) {
-		super(plugin, "sell");
+		super(plugin, "cmd.sell");
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (!(sender instanceof Player)) {
+			displayUsage(sender);
 			sender.sendMessage(Messages.get("must-be-player"));
 			return true;
 		}

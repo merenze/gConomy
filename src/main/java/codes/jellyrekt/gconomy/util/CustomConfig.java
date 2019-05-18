@@ -61,6 +61,7 @@ public abstract class CustomConfig {
 	public boolean save() {
 		try {
 			config.save(file);
+			config = YamlConfiguration.loadConfiguration(file);
 			return true;
 		} catch (IOException ex) {
 			plugin.getLogger().info("Unable to save " + path);

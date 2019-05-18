@@ -18,7 +18,8 @@ public class BalanceCommand extends gConomyCommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		// Check for player.
 		if (!(sender instanceof Player)) {
-			sender.sendMessage(Messages.get("must-be-player"));
+			displayUsage(sender);
+			sender.sendMessage(Messages.get("cmd.must-be-player"));
 			return true;
 		}
 		// Send the player their balance.

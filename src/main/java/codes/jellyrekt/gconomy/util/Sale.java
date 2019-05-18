@@ -97,14 +97,15 @@ public class Sale {
 
 	/**
 	 * Decrements amount by the given argument.
+	 * Sets amount to zero if arg > amount.
 	 * 
-	 * @param amount
+	 * @param amount Amount to buy. Defaults to zero if < 0, or to this.amount if > this.amount.
 	 * @return Actual amount removed.
 	 */
 	public int buyAmount(int amount) {
 		int result = Math.max(0, Math.min(this.amount, amount));
 		this.amount -= result;
-		return amount;
+		return result;
 	}
 
 	/**
