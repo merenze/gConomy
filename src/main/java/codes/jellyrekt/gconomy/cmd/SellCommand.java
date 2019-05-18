@@ -10,7 +10,11 @@ import codes.jellyrekt.gconomy.gConomy;
 import codes.jellyrekt.gconomy.util.Messages;
 import codes.jellyrekt.gconomy.util.Sale;
 import codes.jellyrekt.gconomy.util.SalesLog;
-
+/**
+ * Executor for /sell
+ * @author JellyRekt
+ *
+ */
 public class SellCommand extends gConomyCommandExecutor {
 
 	public SellCommand(gConomy plugin) {
@@ -19,11 +23,13 @@ public class SellCommand extends gConomyCommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		// Player check
 		if (!(sender instanceof Player)) {
 			displayUsage(sender);
 			sender.sendMessage(Messages.get("must-be-player"));
 			return true;
 		}
+		// Arg length check
 		if (args.length < 3) {
 			displayUsage(sender);
 			return true;
@@ -69,26 +75,5 @@ public class SellCommand extends gConomyCommandExecutor {
 				sendError(sender);
 		removeFromInventory(player, material, amount);
 		return true;
-	}
-
-	private int amountInInventory(Player player, Material material) {
-		int result = 0;
-		for (ItemStack item : player.getInventory())
-			// Don't count null slots, wrong item, or damaged items
-			if (item != null && item.getType() == material && item.getDurability() == material.getMaxDurability())
-				result += item.getAmount();
-		return result;
-	}
-	
-	private void removeFromInventory(Player player, Material material, int amount) {
-		for (ItemStack item : player.getInventory()) {
-			if (item != null && item.getType() == material && item.getDurability() == material.getMaxDurability()) {
-				int toRemove = Math.min(item.getAmount(), amount);
-				item.setAmount(item.getAmount() - toRemove);
-				amount -= toRemove;
-			}
-			if (amount <= 0)
-				break;
-		}
 	}
 }

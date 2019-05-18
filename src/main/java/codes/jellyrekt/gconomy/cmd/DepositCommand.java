@@ -10,6 +10,12 @@ import codes.jellyrekt.gconomy.gConomy;
 import codes.jellyrekt.gconomy.util.Balances;
 import codes.jellyrekt.gconomy.util.Messages;
 
+/**
+ * Executor for /deposit
+ * 
+ * @author JellyRekt
+ *
+ */
 public class DepositCommand extends gConomyCommandExecutor {
 	public DepositCommand(gConomy plugin) {
 		super(plugin, "deposit");
@@ -17,72 +23,39 @@ public class DepositCommand extends gConomyCommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		// Check for player
+		// Player check
 		if (!(sender instanceof Player)) {
 			displayUsage(sender);
 			sender.sendMessage(Messages.get("cmd.must-be-player"));
 			return true;
 		}
 		Player player = (Player) sender;
-		// Check for valid argument
+		// Arg length check
 		if (args.length < 1) {
-			sendUsage(sender);
+			displayUsage(sender);
 			return true;
 		}
+		// Valid amount check
 		int amount;
 		try {
+			// Num arg check
 			amount = (int) Double.parseDouble(args[0]);
 		} catch (NumberFormatException ex) {
-			// Check for "all" argument
+			// "All" arg check
 			if (!args[0].equalsIgnoreCase("all")) {
 				sender.sendMessage(Messages.get(key() + ".usage"));
 				return true;
 			}
-			amount = goldInInventory(player);
+			amount = amountInInventory(player, Material.GOLD_INGOT);
 		}
-		// Check for valid amount
 		amount = Math.max(amount, 0);
-		amount = Math.min(amount, goldInInventory(player));
-		// Update balance
+		amount = Math.min(amount, amountInInventory(player, Material.GOLD_INGOT));
+		// Balance update
 		Balances.add(player, amount);
-		// Update inventory
-		removeGold(player, amount);
-		// Message player
+		// Inventory update
+		removeFromInventory(player, Material.GOLD_INGOT, amount);
+		// Player success message
 		sender.sendMessage(Messages.get(key() + ".success").replaceAll("%AMOUNT%", "" + amount));
 		return true;
-	}
-
-	/**
-	 * Get the amount of gold ingots in a Player's Inventory.
-	 * 
-	 * @param player
-	 * @return Amount of gold ingots
-	 */
-	private int goldInInventory(Player player) {
-		int result = 0;
-		for (ItemStack item : player.getInventory())
-			if (item != null && item.getType() == Material.GOLD_INGOT)
-				result += item.getAmount();
-		return result;
-	}
-
-	/**
-	 * Remove gold ingots from a player's inventory.
-	 * 
-	 * @param player
-	 * @param amount
-	 */
-	private void removeGold(Player player, int amount) {
-		for (ItemStack item : player.getInventory()) {
-			// Stop when the proper amount has been removed
-			if (amount <= 0)
-				break;
-			// Check for gold ingot
-			if (item.getType() == Material.GOLD_INGOT) {
-				// Operate on the ItemStack until it's empty
-				while (item != null && item.getAmount() > 0 && amount-- > 0)
-					item.setAmount(item.getAmount() - 1);
-			}
-		}
 	}
 }

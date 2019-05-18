@@ -9,12 +9,18 @@ import codes.jellyrekt.gconomy.cmd.*;
 import codes.jellyrekt.gconomy.util.Balances;
 import codes.jellyrekt.gconomy.util.Messages;
 
+/**
+ * An economy plugin.
+ * 
+ * @author JellyRekt
+ *
+ */
 public class gConomy extends JavaPlugin {
 	/**
 	 * Handle to the running instance of this plugin.
 	 */
 	private static gConomy instance;
-	
+
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -27,7 +33,7 @@ public class gConomy extends JavaPlugin {
 		}
 		registerCommands();
 	}
-	
+
 	private void registerCommands() {
 		getCommand("economy").setExecutor(new EconomyCommand(this));
 		getCommand("balance").setExecutor(new BalanceCommand(this));
@@ -37,14 +43,16 @@ public class gConomy extends JavaPlugin {
 		getCommand("withdraw").setExecutor(new WithdrawCommand(this));
 		getCommand("price").setExecutor(new PriceCommand(this));
 	}
-	
+
 	private void loadFiles() throws IOException {
 		saveResource("message-config.yml", false);
 		Messages.load(this, "message-config");
 		Balances.load(this, "balances");
 	}
+
 	/**
-	 * Return the handle to the running instance of this plugin.
+	 * Handle to the running instance of this plugin.
+	 * 
 	 * @return instance of gConomy
 	 */
 	public static gConomy instance() {

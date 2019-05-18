@@ -17,19 +17,28 @@ public abstract class CustomConfig {
 	private File file;
 	private YamlConfiguration config;
 	private JavaPlugin plugin;
+
 	/**
 	 * Creates a new YAML file or loads the existing one.
 	 * 
-	 * @param plugin Plugin the file is being created for
+	 * @param plugin Plugin for which the file is being created.
 	 * @param name   Name of the file. Exclude extension.
-	 * @throws IOException 
+	 * @throws IOException If the file cannot be found or created.
 	 */
 	protected CustomConfig(JavaPlugin p, String filename) throws IOException {
-		this (p, "", filename);
+		this(p, "", filename);
 	}
-	
-	protected CustomConfig(JavaPlugin p, String dirpath, String filename) throws IOException {
-		plugin = p;
+
+	/**
+	 * Creates a new YAML file or loads the existing one.
+	 * 
+	 * @param plugin Plugin for which the file is being created.
+	 * @param dirpath Path to directory where file is stored. Relative to plugin data folder.
+	 * @param filename Name of the file. Exclude extension.
+	 * @throws IOException If the file cannot be found or created.
+	 */
+	protected CustomConfig(JavaPlugin plugin, String dirpath, String filename) throws IOException {
+		this.plugin = plugin;
 		path = plugin.getDataFolder().toString();
 		if (!dirpath.isEmpty())
 			path += File.separator + dirpath;
@@ -41,20 +50,25 @@ public abstract class CustomConfig {
 		file.createNewFile();
 		config = YamlConfiguration.loadConfiguration(file);
 	}
+
 	/**
 	 * Returns the running instance of this plugin.
+	 * 
 	 * @return instance of gConomy
 	 */
 	protected JavaPlugin plugin() {
 		return plugin;
 	}
+
 	/**
 	 * Returns the YamlConfiguration for the CustomConfig
+	 * 
 	 * @return config
 	 */
 	public YamlConfiguration getYaml() {
 		return config;
 	}
+
 	/**
 	 * Saves the config file. Do this after editing.
 	 */
@@ -68,14 +82,16 @@ public abstract class CustomConfig {
 			return false;
 		}
 	}
+
 	/**
 	 * Reload defaults from resource
-	 * @param filepath Path to default file  
+	 * 
+	 * @param filepath Path to default file
 	 */
 	public void reloadDefaults(String filepath) {
 		plugin.saveResource(filepath, true);
 	}
-	
+
 	protected String path() {
 		return path;
 	}

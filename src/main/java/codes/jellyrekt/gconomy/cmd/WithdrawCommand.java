@@ -9,7 +9,11 @@ import org.bukkit.inventory.ItemStack;
 import codes.jellyrekt.gconomy.gConomy;
 import codes.jellyrekt.gconomy.util.Balances;
 import codes.jellyrekt.gconomy.util.Messages;
-
+/**
+ * Executor for /withdraw
+ * @author JellyRekt
+ *
+ */
 public class WithdrawCommand extends gConomyCommandExecutor {	
 	public WithdrawCommand(gConomy plugin) {
 		super(plugin, "withdraw");
@@ -17,37 +21,37 @@ public class WithdrawCommand extends gConomyCommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		// Check for Player
+		// Player check
 		if (!(sender instanceof Player)) {
 			displayUsage(sender);
 			sender.sendMessage(Messages.get("cmd.must-be-player"));
 			return true;
 		}
 		Player player = (Player) sender;
-		// Check for valid argument
+		// Arg length check
 		if (args.length <= 0) {
 			sender.sendMessage(Messages.get(key() + ".usage"));
 			return true;
 		}
+		// Valid amount check
 		int amount;
 		try {
-			amount = (int) Double.parseDouble(args[0]);
+			amount = parseAmount(args);
 		} catch (NumberFormatException ex) {
 			// Check for "all" argument
 			if (!args[0].equalsIgnoreCase("all")) {
-				sendUsage(sender);
+				displayUsage(sender);
 				return true;
 			}
 			amount = (int) Balances.getBalance(player);
 		}
-		// Check for valid amount
 		amount = Math.max(amount, 0);
 		amount = Math.min(amount, (int) Balances.getBalance(player));
-		// Update balance
+		// Player balance update
 		Balances.add(player, -amount);
-		// Update inventory
+		// Player Inventory update
 		player.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, amount));
-		// Send message
+		// Player success message
 		sender.sendMessage(Messages.get(key() + ".success").replaceAll("%AMOUNT%", "" + amount));
 		return true;
 	}

@@ -9,7 +9,11 @@ import codes.jellyrekt.gconomy.gConomy;
 import codes.jellyrekt.gconomy.exception.NotEnoughOnMarketException;
 import codes.jellyrekt.gconomy.util.Messages;
 import codes.jellyrekt.gconomy.util.SalesLog;
-
+/**
+ * Executor for /price
+ * @author JellyRekt
+ *
+ */
 public class PriceCommand extends gConomyCommandExecutor {
 
 	public PriceCommand(gConomy plugin) {

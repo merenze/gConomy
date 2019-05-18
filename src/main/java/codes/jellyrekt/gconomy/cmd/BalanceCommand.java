@@ -8,6 +8,12 @@ import codes.jellyrekt.gconomy.gConomy;
 import codes.jellyrekt.gconomy.util.Balances;
 import codes.jellyrekt.gconomy.util.Messages;
 
+/**
+ * Executor for /balance
+ * 
+ * @author JellyRekt
+ *
+ */
 public class BalanceCommand extends gConomyCommandExecutor {
 
 	public BalanceCommand(gConomy plugin) {
@@ -16,16 +22,16 @@ public class BalanceCommand extends gConomyCommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		// Check for player.
+		// Player check.
 		if (!(sender instanceof Player)) {
 			displayUsage(sender);
 			sender.sendMessage(Messages.get("cmd.must-be-player"));
 			return true;
 		}
-		// Send the player their balance.
+		// Send player balance message.
 		Player player = (Player) sender;
-		player.sendMessage(Messages.get("cmd.balance.success").replaceAll("%AMOUNT%",
-				"" + Balances.getBalance(player)));
+		sender.sendMessage(
+				Messages.get("cmd.balance.success").replaceAll("%AMOUNT%", "" + Balances.getBalance(player)));
 		return true;
 	}
 
